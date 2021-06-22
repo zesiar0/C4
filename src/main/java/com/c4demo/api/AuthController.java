@@ -19,7 +19,13 @@ import java.util.Map;
 @RequestMapping("api")
 @CrossOrigin
 public class AuthController {
-
+    /**
+     * @author 曾家华
+     * @return token 获取到的token
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     * @throws KeyManagementException
+     */
     @RequestMapping(value = "get_token", method = RequestMethod.GET)
     public String getToken() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         RestTemplate restTemplate =new RestTemplate(RestTemplateConfig.generateHttpRequestFactory());
