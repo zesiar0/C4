@@ -1,4 +1,4 @@
-package com.c4demo.api;
+package com.c4demo.controller.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.configure.RestTemplateConfig;

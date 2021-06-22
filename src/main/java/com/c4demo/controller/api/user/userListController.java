@@ -1,4 +1,4 @@
-package com.c4demo.api.user;
+package com.c4demo.controller.api.user;
 
 import com.c4demo.configure.RestTemplateConfig;
 import org.springframework.http.HttpEntity;
@@ -22,6 +22,13 @@ import java.util.Map;
 @CrossOrigin
 public class userListController {
 
+    /**
+     * @author 曾家华
+     * @return resJson.getBody() 返回查询的所有用户信息
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     * @throws KeyManagementException
+     */
     @RequestMapping(value = "user/userlist", method = RequestMethod.GET)
     public String getUserList(
 //            @RequestParam(value = "filter", required = false) Object filter,
