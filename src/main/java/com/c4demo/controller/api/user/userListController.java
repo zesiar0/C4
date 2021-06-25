@@ -1,5 +1,6 @@
 package com.c4demo.controller.api.user;
 
+import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,12 +13,12 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("api")
 @CrossOrigin
 public class userListController {
-
     @Autowired
     private SessionService sessionService;
 
@@ -42,7 +43,7 @@ public class userListController {
 //            @RequestParam(value = "sortType") String sortType
     ) {
         String path = "/rest/campusclientservice/v1/event/userlist";
-        String token = sessionService.getToken();
+//        String token = sessionService.getToken();
 
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.add("Content-Type", "application/json");
@@ -53,9 +54,9 @@ public class userListController {
         body.put("regionType", "site");
         body.put("level", "0");
         body.put("tenantId", "default-organization-id");
-        body.put("startTime" ,"1592846642");
+        body.put("startTime" ,"1624556576000");
         body.put("id", "/");
-        body.put("endTime" , "1624382642");
+        body.put("endTime" , "1624614176000");
         body.put("sortColumn", null);
         body.put("currPage", "1");
         body.put("pageSize", "5");

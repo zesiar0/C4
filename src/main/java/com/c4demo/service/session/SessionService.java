@@ -66,8 +66,7 @@ public class SessionService {
 
         ResponseEntity<String> resJson = getJsonData("/rest/plat/smapp/v1/oauth/token", headers, body, PUT);
 
-        JSONObject json = JSONObject.parseObject(resJson.getBody());
-        this.token = json.getString("accessSession");
+        this.token = JSONObject.parseObject(resJson.getBody()).getString("accessSession");
     }
 
     public ResponseEntity<String> getJsonData(String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
@@ -85,8 +84,9 @@ public class SessionService {
     }
 
     public ResponseEntity<String> getJsonData(String path, Map<String, String> body, HttpMethod reqMethod) {
-        if (getToken() == null)
+        if (getToken() == null) {
             updateToken();
+        }
         // Header 不需要下层参与
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
