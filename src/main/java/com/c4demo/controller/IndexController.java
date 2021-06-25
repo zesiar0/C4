@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author 曾家华
  */
-@RestController
+@RestController // ? 这里不是 REST api 入口， 为什么要 @RestController
+// @ResponseBody
 public class IndexController {
     @RequestMapping({"/", "/index"})
     public String index() {
