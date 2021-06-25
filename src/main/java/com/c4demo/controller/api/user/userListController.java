@@ -1,16 +1,12 @@
 package com.c4demo.controller.api.user;
 
-import com.c4demo.configure.RestTemplateConfig;
+import com.c4demo.service.session.SessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.DefaultResponseErrorHandler;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -21,6 +17,9 @@ import java.util.Map;
 @RequestMapping("api")
 @CrossOrigin
 public class userListController {
+
+    @Autowired
+    private SessionService sessionService;
 
     /**
      * @author 曾家华
@@ -41,24 +40,9 @@ public class userListController {
 //            @RequestParam(value = "currPage") String currPage,
 //            @RequestParam(value = "pageSize") String pageSize,
 //            @RequestParam(value = "sortType") String sortType
-    ) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        RestTemplate restTemplate = new RestTemplate(RestTemplateConfig.generateHttpRequestFactory());
-        restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
-            @Override
-            public void handleError(ClientHttpResponse response) throws IOException {
-                if (response.getRawStatusCode() != 401) {
-                    super.handleError(response);
-                }
-            }
-        });
-
+    ) {
         String url = "https://117.78.31.209:26335/rest/campusclientservice/v1/event/userlist";
-        String tokenUrl = "http://localhost:8080/api/get_token";
-
-        String token = restTemplate.getForObject(tokenUrl, String.class);
-        if (token == null) {
-            return "token failed";
-        }
+        String token = sessionService.getToken();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -67,7 +51,7 @@ public class userListController {
 
         Map<String, String> body = new HashMap<>();
         body.put("regionType", "site");
-        body.put("level", "0");
+        body.put("level", "2");
         body.put("tenantId", "default-organization-id");
         body.put("startTime" ,"1592846642");
         body.put("id", "/");
@@ -77,9 +61,7 @@ public class userListController {
         body.put("pageSize", "5");
         body.put("sortType", "asc");
 
-        HttpEntity httpEntity = new HttpEntity(body, headers);
-        ResponseEntity<String> resJson = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
-
-        return  resJson.getBody();
+        ResponseEntity<String> resJson = sessionService.getJsonData(url, headers, body);
+        return resJson.getBody();
     }
 }
