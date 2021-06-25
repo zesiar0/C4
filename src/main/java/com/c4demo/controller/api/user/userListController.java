@@ -28,7 +28,7 @@ public class userListController {
      * @throws KeyStoreException
      * @throws KeyManagementException
      */
-    @RequestMapping(value = "user/userlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/userlist", method = RequestMethod.GET)
     public String getUserList(
 //            @RequestParam(value = "filter", required = false) Object filter,
 //            @RequestParam(value = "level") String level,
@@ -41,13 +41,13 @@ public class userListController {
 //            @RequestParam(value = "pageSize") String pageSize,
 //            @RequestParam(value = "sortType") String sortType
     ) {
-        String url = "https://117.78.31.209:26335/rest/campusclientservice/v1/event/userlist";
+        String path = "/rest/campusclientservice/v1/event/userlist";
         String token = sessionService.getToken();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        headers.add("Accept", "application/json");
-        headers.add("X-Auth-Token", token);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Content-Type", "application/json");
+//        headers.add("Accept", "application/json");
+//        headers.add("X-Auth-Token", token);
 
         Map<String, String> body = new HashMap<>();
         body.put("regionType", "site");
@@ -61,7 +61,7 @@ public class userListController {
         body.put("pageSize", "5");
         body.put("sortType", "asc");
 
-        ResponseEntity<String> resJson = sessionService.getJsonData(url, headers, body, sessionService.POST);
+        ResponseEntity<String> resJson = sessionService.getJsonData(path, body, SessionService.POST);
         return resJson.getBody();
     }
 }

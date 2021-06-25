@@ -2,6 +2,8 @@ package com.c4demo.service.session;
 
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.configure.RestTemplateConfig;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
@@ -21,19 +23,23 @@ import java.util.Map;
  */
 @Component
 @CrossOrigin
+@PropertySource("classpath:config.properties")
 public class SessionService {
-    public final HttpMethod POST = HttpMethod.POST;
-    public final HttpMethod GET = HttpMethod.GET;
-    public final HttpMethod PUT = HttpMethod.PUT;
+    static public final HttpMethod POST = HttpMethod.POST;
+    static public final HttpMethod GET = HttpMethod.GET;
+    static public final HttpMethod PUT = HttpMethod.PUT;
 
     private String token;
     private final RestTemplate restTemplate;
-    private final String tokenUrl;
+    @Value("${session.platformURL}")
+    private String platformURL;
+    @Value("${session.username}")
+    private String userName;
+    @Value("${session.password}")
+    private String password;
 
     public SessionService() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         this.restTemplate = new RestTemplate(RestTemplateConfig.generateHttpRequestFactory());
-        this.tokenUrl = "https://117.78.31.209:26335/rest/plat/smapp/v1/oauth/token";
-        this.updateToken();
 
         this.restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
             @Override
@@ -52,27 +58,41 @@ public class SessionService {
     public void updateToken() {
         Map<String, String> body = new HashMap<>(3);
         body.put("grantType", "password");
-        body.put("userName", "13264789860");
-        body.put("value", "123456@lqz");
+        body.put("userName", userName);
+        body.put("value", password);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
 
-        ResponseEntity<String> resJson = this.getJsonData(tokenUrl, headers, body, this.PUT);
+        ResponseEntity<String> resJson = getJsonData("/rest/plat/smapp/v1/oauth/token", headers, body, PUT);
 
         JSONObject json = JSONObject.parseObject(resJson.getBody());
         this.token = json.getString("accessSession");
     }
 
-    public ResponseEntity<String> getJsonData(String url, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
+    public ResponseEntity<String> getJsonData(String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
         HttpEntity entity = new HttpEntity(body, headers);
-        ResponseEntity<String> resJson = this.restTemplate.exchange(url, reqMethod, entity, String.class);
+        ResponseEntity<String> resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
         System.out.println(resJson);
         if (JSONObject.parseObject(resJson.getBody()).getIntValue("resultCode") != 0) {
-            this.updateToken();
-            headers.set("X-Auth-Token", this.token);
-            resJson = this.restTemplate.exchange(url, reqMethod, entity, String.class);
+            updateToken();
+            headers.set("X-Auth-Token", getToken());
+            // update header
+            entity = new HttpEntity(body, headers);
+            resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
         }
         return resJson;
     }
+
+    public ResponseEntity<String> getJsonData(String path, Map<String, String> body, HttpMethod reqMethod) {
+        if (getToken() == null)
+            updateToken();
+        // Header 不需要下层参与
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        headers.add("Accept", "application/json");
+        headers.add("X-Auth-Token", getToken());
+        return getJsonData(path, headers, body, reqMethod);
+    }
+
 }
