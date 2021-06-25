@@ -22,6 +22,10 @@ import java.util.Map;
 @Component
 @CrossOrigin
 public class SessionService {
+    public final HttpMethod POST = HttpMethod.POST;
+    public final HttpMethod GET = HttpMethod.GET;
+    public final HttpMethod PUT = HttpMethod.PUT;
+
     private String token;
     private final RestTemplate restTemplate;
     private final String tokenUrl;
@@ -54,23 +58,20 @@ public class SessionService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
 
-        HttpEntity entity = new HttpEntity(body, headers);
+        ResponseEntity<String> resJson = this.getJsonData(tokenUrl, headers, body, this.PUT);
 
-        ResponseEntity<String> exchange = this.restTemplate.exchange(this.tokenUrl, HttpMethod.PUT, entity, String.class);
-
-        String resBody = exchange.getBody();
-        JSONObject json = JSONObject.parseObject(resBody);
+        JSONObject json = JSONObject.parseObject(resJson.getBody());
         this.token = json.getString("accessSession");
     }
 
-    public ResponseEntity<String> getJsonData(String url, HttpHeaders headers, Map<String, String> body) {
+    public ResponseEntity<String> getJsonData(String url, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
         HttpEntity entity = new HttpEntity(body, headers);
-        ResponseEntity<String> resJson = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> resJson = this.restTemplate.exchange(url, reqMethod, entity, String.class);
         System.out.println(resJson);
         if (JSONObject.parseObject(resJson.getBody()).getIntValue("resultCode") != 0) {
             this.updateToken();
             headers.set("X-Auth-Token", this.token);
-            resJson = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+            resJson = this.restTemplate.exchange(url, reqMethod, entity, String.class);
         }
         return resJson;
     }

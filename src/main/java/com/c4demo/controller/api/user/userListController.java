@@ -51,7 +51,7 @@ public class userListController {
 
         Map<String, String> body = new HashMap<>();
         body.put("regionType", "site");
-        body.put("level", "2");
+        body.put("level", "0");
         body.put("tenantId", "default-organization-id");
         body.put("startTime" ,"1592846642");
         body.put("id", "/");
@@ -61,7 +61,7 @@ public class userListController {
         body.put("pageSize", "5");
         body.put("sortType", "asc");
 
-        ResponseEntity<String> resJson = sessionService.getJsonData(url, headers, body);
+        ResponseEntity<String> resJson = sessionService.getJsonData(url, headers, body, sessionService.POST);
         return resJson.getBody();
     }
 }
