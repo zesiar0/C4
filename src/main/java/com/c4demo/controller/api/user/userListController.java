@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,9 +26,6 @@ public class userListController {
     /**
      * @author 曾家华
      * @return resJson.getBody() 返回查询的所有用户信息
-     * @throws NoSuchAlgorithmException
-     * @throws KeyStoreException
-     * @throws KeyManagementException
      */
     @RequestMapping(value = "/user/userlist", method = RequestMethod.GET)
     public String getUserList(
@@ -51,12 +49,13 @@ public class userListController {
 //        headers.add("X-Auth-Token", token);
 
         Map<String, String> body = new HashMap<>();
+        Date date = new Date();
         body.put("regionType", "site");
         body.put("level", "0");
         body.put("tenantId", "default-organization-id");
         body.put("startTime" ,"1624556576000");
         body.put("id", "/");
-        body.put("endTime" , "1624614176000");
+        body.put("endTime" , String.valueOf(date.getTime()));
         body.put("sortColumn", null);
         body.put("currPage", "1");
         body.put("pageSize", "5");

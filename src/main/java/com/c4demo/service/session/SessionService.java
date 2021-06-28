@@ -16,6 +16,8 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,16 +66,16 @@ public class SessionService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
 
-        ResponseEntity<String> resJson = getJsonData("/rest/plat/smapp/v1/oauth/token", headers, body, PUT);
+        ResponseEntity<String> resJson = getJsonData(false, "/rest/plat/smapp/v1/oauth/token", headers, body, PUT);
 
         this.token = JSONObject.parseObject(resJson.getBody()).getString("accessSession");
     }
 
-    public ResponseEntity<String> getJsonData(String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
+    public ResponseEntity<String> getJsonData(boolean needRenewToken, String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
         HttpEntity entity = new HttpEntity(body, headers);
         ResponseEntity<String> resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
         System.out.println(resJson);
-        if (JSONObject.parseObject(resJson.getBody()).getIntValue("resultCode") != 0) {
+        if (needRenewToken && JSONObject.parseObject(resJson.getBody()).getIntValue("resultCode") != 0) {
             updateToken();
             headers.set("X-Auth-Token", getToken());
             // update header
@@ -89,10 +91,12 @@ public class SessionService {
         }
         // Header 不需要下层参与
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        headers.add("Accept", "application/json");
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        List<MediaType> mediaTypeList = new LinkedList<>();
+        mediaTypeList.add(MediaType.APPLICATION_JSON);
+        headers.setAccept(mediaTypeList);
         headers.add("X-Auth-Token", getToken());
-        return getJsonData(path, headers, body, reqMethod);
+        return getJsonData(true, path, headers, body, reqMethod);
     }
 
 }
