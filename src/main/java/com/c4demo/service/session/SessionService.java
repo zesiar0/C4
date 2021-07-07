@@ -71,7 +71,7 @@ public class SessionService {
         this.token = JSONObject.parseObject(resJson.getBody()).getString("accessSession");
     }
 
-    public ResponseEntity<String> getJsonData(boolean needRenewToken, String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
+    ResponseEntity<String> getJsonData(boolean needRenewToken, String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
         HttpEntity entity = new HttpEntity(body, headers);
         ResponseEntity<String> resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
         System.out.println(resJson);

@@ -27,11 +27,9 @@ public class rankController {
 
     @RequestMapping(value = "exp/rank", method = RequestMethod.GET)
 
-    public String get_data() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException{
+    public String get_data() {
 
         String url = "/rest/campuswlanqualityservice/v1/expmonitor/rank/basictable?param=";
-
-        String token = sessionService.getToken();
 
         JSONObject param = new JSONObject();
         param.put("regionType","site");
