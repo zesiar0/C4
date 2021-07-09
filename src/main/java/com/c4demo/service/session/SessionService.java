@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
@@ -71,6 +72,7 @@ public class SessionService {
         this.token = JSONObject.parseObject(resJson.getBody()).getString("accessSession");
     }
 
+
     ResponseEntity<String> getJsonData(boolean needRenewToken, String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
         HttpEntity entity = new HttpEntity(body, headers);
         ResponseEntity<String> resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
@@ -83,6 +85,21 @@ public class SessionService {
             resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
         }
         return resJson;
+    }
+
+    public ResponseEntity<String> getJsonData(String path, MultiValueMap<String, String> extraHeaders, Map<String, String> body, HttpMethod reqMethod) {
+        if (getToken() == null) {
+            updateToken();
+        }
+        // Header 不需要下层参与
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        List<MediaType> mediaTypeList = new LinkedList<>();
+        mediaTypeList.add(MediaType.APPLICATION_JSON);
+        headers.setAccept(mediaTypeList);
+        headers.add("X-Auth-Token", getToken());
+        headers.addAll(extraHeaders);
+        return getJsonData(true, path, headers, body, reqMethod);
     }
 
     public ResponseEntity<String> getJsonData(String path, Map<String, String> body, HttpMethod reqMethod) {

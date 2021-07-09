@@ -3,6 +3,7 @@ package com.c4demo.controller.api.expmonitor;
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.yaml.snakeyaml.util.UriEncoder;
@@ -12,14 +13,15 @@ import org.yaml.snakeyaml.util.UriEncoder;
 @CrossOrigin
 public class connectivityController {
     private SessionService sessionService;
+    @Value("${expmonitor.connectivity.path}")
+    private String path;
 
     @Autowired
     public connectivityController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 
-    public connectivityController() {
-    }
+    public connectivityController() { }
 
     public SessionService getSessionService() {
         return sessionService;
@@ -27,6 +29,14 @@ public class connectivityController {
 
     public void setSessionService(SessionService sessionService) {
         this.sessionService = sessionService;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @RequestMapping(value = "expmonitor/connectivity", method = RequestMethod.GET)
@@ -42,7 +52,7 @@ public class connectivityController {
             @RequestParam(value = "dateTo") long dateTo
     ) {
         JSONObject res = null, param = new JSONObject();
-        String url = "/rest/campuswlanqualityservice/v1/connectivity/connect-trend";
+        String url = path + "?param=";
 
         param.put("regionType", regionType);
         param.put("level", String.valueOf(level));
@@ -54,7 +64,7 @@ public class connectivityController {
         param.put("dateFrom", String.valueOf(dateFrom));
         param.put("dateTo", String.valueOf(dateTo));
 
-        url += "?param=" + UriEncoder.encode(param.toJSONString());
+        url += UriEncoder.encode(param.toJSONString());
 
         ResponseEntity<String> resJson = sessionService.getJsonData(url, null, SessionService.GET);
         return resJson.getBody();

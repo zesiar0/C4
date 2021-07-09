@@ -26,7 +26,6 @@ public class rankController {
     private SessionService sessionService;
 
     @RequestMapping(value = "exp/rank", method = RequestMethod.GET)
-
     public String get_data() {
 
         String url = "/rest/campuswlanqualityservice/v1/expmonitor/rank/basictable?param=";
