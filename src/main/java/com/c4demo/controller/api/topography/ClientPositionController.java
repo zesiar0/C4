@@ -41,7 +41,7 @@ public class ClientPositionController {
         this.sessionService = sessionService;
     }
 
-    @PostMapping("clientposition")
+    @GetMapping("clientposition")
     public String getClientPosition(@RequestParam int level,
                                     @RequestParam String clientId) {
         String param = "?param=";
