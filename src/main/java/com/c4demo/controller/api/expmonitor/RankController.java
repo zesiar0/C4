@@ -38,8 +38,8 @@ public class RankController {
         this.path = path;
     }
 
-    @GetMapping(value = "exp/rank")
-    public String get_data(@RequestParam String regionType, @RequestParam int level) {
+    @RequestMapping(value = "exp/rank", method = RequestMethod.POST)
+    public String get_data(@RequestParam(value = "regionType") String regionType, @RequestParam(value = "level") int level) {
         String url = "?param=";
 
         JSONObject param = new JSONObject();

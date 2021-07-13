@@ -19,7 +19,7 @@ public class UserTrendController {
     @Value("${user.UserTrendController.path}")
     private String path;
 
-    @RequestMapping(value = "/user/usertrend", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/usertrend", method = RequestMethod.POST)
     public String getUserTrend(
             @RequestParam(value = "regionType") String regionType,
             @RequestParam(value = "level") String level,

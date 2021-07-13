@@ -18,7 +18,7 @@ public class UserInfoController {
     @Value("${user.UserInfoController.path}")
     private String path;
 
-    @RequestMapping(value = "/user/userinfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/userinfo", method = RequestMethod.POST)
     public String getUserInfo(
 //            @RequestParam(value = "intervals") String intervals,
 //            @RequestParam(value = "level") String level,

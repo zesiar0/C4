@@ -10,7 +10,7 @@ import org.yaml.snakeyaml.util.UriEncoder;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping(path = "api/topography")
+@RequestMapping(path = "api")
 @CrossOrigin
 public class ClientPositionController {
     @Value("${topography.clientPosition.path}")
@@ -41,9 +41,9 @@ public class ClientPositionController {
         this.sessionService = sessionService;
     }
 
-    @GetMapping("clientposition")
-    public String getClientPosition(@RequestParam int level,
-                                    @RequestParam String clientId) {
+    @RequestMapping(value = "topography/clientposition", method = RequestMethod.POST)
+    public String getClientPosition(@RequestParam(value = "level") int level,
+                                    @RequestParam(value = "clientId") String clientId) {
         String param = "?param=";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("level", level);

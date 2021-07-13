@@ -45,8 +45,8 @@ public class ConnectivityController {
         this.path = path;
     }
 
-    @RequestMapping(value = "expmonitor/connectivity", method = RequestMethod.GET)
-    public List<Map> getConnectivity(
+    @RequestMapping(value = "expmonitor/connectivity", method = RequestMethod.POST)
+    public String getConnectivity(
 //            @RequestParam(value = "regionType") String regionType,
 //            @RequestParam(value = "level") int level,
 //            @RequestParam(value = "tenantId") String tenantId,
@@ -122,6 +122,6 @@ public class ConnectivityController {
 //        map.put("authSuccNum", authSuccNum);
         map.put("accessTotalNum", accessTotalNum);
         retList.add(map);
-        return retList;
+        return resJson.getBody();
     }
 }

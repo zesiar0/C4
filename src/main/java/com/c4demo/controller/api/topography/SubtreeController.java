@@ -8,7 +8,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/topography")
+@RequestMapping("api")
 @CrossOrigin
 public class SubtreeController {
 
@@ -31,8 +31,8 @@ public class SubtreeController {
         this.sessionService = sessionService;
     }
 
-    @GetMapping("subtree")
-    public String getSubtree(@RequestParam String locationId) {
+    @RequestMapping(value = "topography/subtree", method = RequestMethod.POST)
+    public String getSubtree(@RequestParam(value = "locationId") String locationId) {
         MultiValueMap<String, String> idHeader = new LinkedMultiValueMap<>();
         idHeader.add("id", locationId);
 

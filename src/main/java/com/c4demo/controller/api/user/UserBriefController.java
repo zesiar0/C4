@@ -3,10 +3,7 @@ package com.c4demo.controller.api.user;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -30,7 +27,7 @@ public class UserBriefController {
         this.userListControllerIns = userListControllerIns;
     }
 
-    @GetMapping(path = "/user/userbriefinfo")
+    @RequestMapping(value = "/user/userbriefinfo", method = RequestMethod.POST)
     public String getUserBriefInfo() {
         JSONObject userInfo = JSONObject.parseObject(userListControllerIns.getUserList()), ans = new JSONObject();
 

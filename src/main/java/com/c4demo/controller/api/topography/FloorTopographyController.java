@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.yaml.snakeyaml.util.UriEncoder;
 
 @RestController
-@RequestMapping("api/topography")
+@RequestMapping("api")
 @CrossOrigin
 public class FloorTopographyController {
     @Value("${topography.floorTopography.path}")
@@ -38,9 +38,9 @@ public class FloorTopographyController {
         this.path = path;
     }
 
-    @GetMapping(value = "floortopography")
-    public String getFloorTopology(@RequestParam int level,
-                                   @RequestParam String clientId) {
+    @RequestMapping(value = "topography/floortopography", method = RequestMethod.POST)
+    public String getFloorTopology(@RequestParam(value = "level") int level,
+                                   @RequestParam(value = "clientId") String clientId) {
         String param = "?param=";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("level", String.valueOf(level));

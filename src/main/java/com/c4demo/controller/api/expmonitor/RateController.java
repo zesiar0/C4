@@ -38,13 +38,13 @@ public class RateController {
         this.path = path;
     }
 
-    @GetMapping(value = "exp/rate")
+    @RequestMapping(value = "exp/rate", method = RequestMethod.POST)
     public String get_data(
-            @RequestParam String regionType,
-            @RequestParam int level,
-            @RequestParam String id,
-            @RequestParam Long startTime,
-            @RequestParam Long endTime
+            @RequestParam(value = "regionType") String regionType,
+            @RequestParam(value = "level") int level,
+            @RequestParam(value = "id") String id,
+            @RequestParam(value = "startTime") Long startTime,
+            @RequestParam(value = "endTime") Long endTime
     ) {
         String url = "?param=";
 

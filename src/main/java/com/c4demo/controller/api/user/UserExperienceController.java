@@ -18,7 +18,7 @@ public class UserExperienceController {
     @Value("${user.UserExperienceController.path}")
     private String path;
 
-    @RequestMapping(value = "/user/userexpr", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/userexpr", method = RequestMethod.POST)
     public String getUserExpr(
             @RequestParam(value = "userType") String userType,
             @RequestParam(value = "key") String key,

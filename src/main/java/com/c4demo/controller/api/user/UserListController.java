@@ -35,7 +35,7 @@ public class UserListController {
     }
 
 
-    @RequestMapping(value = "/user/userlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/userlist", method = RequestMethod.POST)
     public String getUserList(
 //            @RequestParam(value = "filter", required = false) Object filter,
 //            @RequestParam(value = "level") String level,
