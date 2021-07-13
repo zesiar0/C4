@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.yaml.snakeyaml.util.UriEncoder;
 
+import javax.annotation.Resource;
+
 @RestController
 @RequestMapping(path = "api/topography")
 @CrossOrigin
 public class ClientPositionController {
     @Value("${topography.clientPosition.path}")
     private String path;
+    @Resource
     private SessionService sessionService;
 
     public ClientPositionController() { }

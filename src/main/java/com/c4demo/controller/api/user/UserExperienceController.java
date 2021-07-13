@@ -1,10 +1,11 @@
 package com.c4demo.controller.api.user;
 
 import com.c4demo.service.session.SessionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +13,10 @@ import java.util.Map;
 @RequestMapping("api")
 @CrossOrigin
 public class UserExperienceController {
-    @Autowired
-    public SessionService sessionService;
+    @Resource
+    private SessionService sessionService;
+    @Value("${user.UserExperienceController.path}")
+    private String path;
 
     @RequestMapping(value = "/user/userexpr", method = RequestMethod.GET)
     public String getUserExpr(
@@ -25,8 +28,6 @@ public class UserExperienceController {
             @RequestParam(value = "userMac") String userMac,
             @RequestParam(value = "trendType") String trendType
     ) {
-        String path = "/rest/campusclientservice/v1/journey/kpi/trend";
-
         Map<String, String> body = new HashMap<>();
         body.put("userType", userType);
         body.put("key", key);

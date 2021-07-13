@@ -4,12 +4,14 @@ package com.c4demo.controller.api.expmonitor;
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.yaml.snakeyaml.util.UriEncoder;
 
+import javax.annotation.Resource;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -22,14 +24,13 @@ import java.util.Objects;
 @CrossOrigin
 
 public class RankController {
-    @Autowired
+    @Resource
     private SessionService sessionService;
+    @Value("${expmonitor.rankcontroller.url}")
+    private String url;
 
     @RequestMapping(value = "exp/rank", method = RequestMethod.GET)
     public String get_data() {
-
-        String url = "/rest/campuswlanqualityservice/v1/expmonitor/rank/basictable?param=";
-
         JSONObject param = new JSONObject();
         param.put("regionType","site");
         param.put("level","1");
