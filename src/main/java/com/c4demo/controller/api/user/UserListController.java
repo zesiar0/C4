@@ -32,10 +32,7 @@ public class UserListController {
         this.sessionService = sessionService;
     }
 
-    /**
-     * @author 曾家华
-     * @return resJson.getBody() 返回查询的所有用户信息
-     */
+
     @RequestMapping(value = "/user/userlist", method = RequestMethod.GET)
     public String getUserList(
 //            @RequestParam(value = "filter", required = false) Object filter,
