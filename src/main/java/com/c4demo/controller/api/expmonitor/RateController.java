@@ -5,45 +5,71 @@ import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.yaml.snakeyaml.util.UriEncoder;
 
-import javax.annotation.Resource;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
 @RestController
 @RequestMapping("api")
 @CrossOrigin
-
 public class RateController {
-    @Resource
     private SessionService sessionService;
-    @Value("${expmonitor.ratecontroller.url}")
-    private String url;
+    @Value("${expmonitor.RateController.path}")
+    private String path;
 
-    @RequestMapping(value = "exp/rate", method = RequestMethod.GET)
+    @Autowired
+    public RateController(SessionService sessionService) {
+        this.sessionService = sessionService;
+    }
 
-    public String get_data() {
+    public SessionService getSessionService() {
+        return sessionService;
+    }
+
+    public void setSessionService(SessionService sessionService) {
+        this.sessionService = sessionService;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @GetMapping(value = "exp/rate")
+    public String get_data(
+            @RequestParam String regionType,
+            @RequestParam int level,
+            @RequestParam String id,
+            @RequestParam Long startTime,
+            @RequestParam Long endTime
+    ) {
+        String url = "?param=";
+
         JSONObject param = new JSONObject();
-        param.put("regionType","site");
-        param.put("level","1");
-        param.put("tenantId","default-organization-id");
-        param.put("startTime","1624549463000");
-        param.put("endTime","1624635863000");
-        param.put("id","857b706e-67d9-49c0-b3cd-4bd1e6963c07");
+        param.put("regionType", regionType);
+        param.put("level", level);
+        param.put("tenantId", "default-organization-id");
+        param.put("startTime", startTime); // 1624549463000
+        param.put("endTime", endTime); // 1624635863000
+        param.put("id", id);
 
-        String path = UriEncoder.encode(param.toJSONString());
+        url += UriEncoder.encode(param.toJSONString());
+        ResponseEntity<String> resJson = sessionService.getJsonData(path + url, null, SessionService.GET);
+        JSONObject json = JSONObject.parseObject(resJson.getBody()), retJson = new JSONObject();
 
-        ResponseEntity<String> resJson = sessionService.getJsonData(url + path, null, SessionService.GET);
+        if (json == null || json.getInteger("resultCode") != 0) {
+            // error
+            retJson.put("ok", 0);
+            retJson.put("reason", (json == null) ? "Empty response from upstream server" : ("Error: " + json.getString("errorReson")));
+            return retJson.toJSONString();
+        }
 
-        return resJson.getBody();
+        retJson.put("ok", 1);
+        retJson.put("data", json.getJSONObject("data"));
+
+        return retJson.toJSONString();
     }
 }
