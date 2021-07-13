@@ -1,10 +1,11 @@
 package com.c4demo.controller.api.user;
 
 import com.c4demo.service.session.SessionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +13,10 @@ import java.util.Map;
 @RequestMapping("api")
 @CrossOrigin
 public class UserInfoController {
-    @Autowired
-    public SessionService sessionService;
+    @Resource
+    private SessionService sessionService;
+    @Value("${user.UserInfoController.path}")
+    private String path;
 
     @RequestMapping(value = "/user/userinfo", method = RequestMethod.GET)
     public String getUserInfo(
@@ -24,7 +27,6 @@ public class UserInfoController {
 //            @RequestParam(value = "usermac") String usermac,
 //            @RequestParam(value = "id") String id
     ) {
-        String path = "/rest/campusclientservice/v1/protocoltrace/sessionlist";
 
         Map<String, String> body = new HashMap<>();
 //        body.put("intervals", intervals);

@@ -2,10 +2,11 @@ package com.c4demo.controller.api.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,8 +14,10 @@ import java.util.Map;
 @RequestMapping("api")
 @CrossOrigin
 public class UserTrendController {
-    @Autowired
-    public SessionService sessionService;
+    @Resource
+    private SessionService sessionService;
+    @Value("${user.UserTrendController.path}")
+    private String path;
 
     @RequestMapping(value = "/user/usertrend", method = RequestMethod.GET)
     public String getUserTrend(
@@ -27,8 +30,6 @@ public class UserTrendController {
             @RequestParam(value = "showType") String showType,
             @RequestParam(value = "isAutoRefresh") String isAutoRefresh
     ) {
-        String path = "/rest/campusclientservice/v1/clientoverview/userstatistics/trend";
-
         Map<String, Object> map = new HashMap<>();
         map.put("regionType", regionType);
         map.put("level", level);

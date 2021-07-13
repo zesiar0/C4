@@ -21,9 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author 曾家华
- */
 @Component
 @CrossOrigin
 @PropertySource("classpath:config.properties")

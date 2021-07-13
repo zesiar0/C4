@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +16,8 @@ import java.util.Map;
 @CrossOrigin
 public class UserListController {
     private SessionService sessionService;
+    @Value("${user.UserListsController.path}")
+    private String path;
 
     @Autowired
     public UserListController(SessionService sessionService) {
@@ -46,7 +48,6 @@ public class UserListController {
 //            @RequestParam(value = "pageSize") String pageSize,
 //            @RequestParam(value = "sortType") String sortType
     ) {
-        String path = "/rest/campusclientservice/v1/event/userlist";
         JSONObject ret = new JSONObject();
         int currentPage = 1;
         Map<String, String> body = new HashMap<>();
