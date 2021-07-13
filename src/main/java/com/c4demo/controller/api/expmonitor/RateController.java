@@ -1,6 +1,6 @@
 package com.c4demo.controller.api.expmonitor;
 
-//api 3.3
+//api 3.2
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +21,19 @@ import java.util.Objects;
 @RequestMapping("api")
 @CrossOrigin
 
-public class rankController {
+public class RateController {
+
     @Autowired
     private SessionService sessionService;
 
-    @RequestMapping(value = "exp/rank", method = RequestMethod.GET)
+    @RequestMapping(value = "exp/rate", method = RequestMethod.GET)
+
     public String get_data() {
 
-        String url = "/rest/campuswlanqualityservice/v1/expmonitor/rank/basictable?param=";
+
+        String url = "/rest/campuswlanqualityservice/v1/expmonitor/rate/basictable?param=";
+
+        String token = sessionService.getToken();
 
         JSONObject param = new JSONObject();
         param.put("regionType","site");
@@ -36,7 +41,7 @@ public class rankController {
         param.put("tenantId","default-organization-id");
         param.put("startTime","1624549463000");
         param.put("endTime","1624635863000");
-        param.put("id","/");
+        param.put("id","857b706e-67d9-49c0-b3cd-4bd1e6963c07");
 
         String path = UriEncoder.encode(param.toJSONString());
 

@@ -12,7 +12,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
-public class userTrendController {
+public class UserTrendController {
     @Autowired
     public SessionService sessionService;
 

@@ -11,7 +11,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
-public class userExperienceController {
+public class UserExperienceController {
     @Autowired
     public SessionService sessionService;
 

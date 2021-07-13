@@ -10,15 +10,15 @@ import org.yaml.snakeyaml.util.UriEncoder;
 @RestController
 @RequestMapping("api/topography")
 @CrossOrigin
-public class floorTopographyController {
+public class FloorTopographyController {
     @Value("${topography.floorTopography.path}")
     private String path;
     private SessionService sessionService;
 
-    public floorTopographyController() { }
+    public FloorTopographyController() { }
 
     @Autowired
-    public floorTopographyController(SessionService sessionService) {
+    public FloorTopographyController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 

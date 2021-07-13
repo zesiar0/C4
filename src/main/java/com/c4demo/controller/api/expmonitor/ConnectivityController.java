@@ -11,17 +11,17 @@ import org.yaml.snakeyaml.util.UriEncoder;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
-public class connectivityController {
+public class ConnectivityController {
     private SessionService sessionService;
     @Value("${expmonitor.connectivity.path}")
     private String path;
 
     @Autowired
-    public connectivityController(SessionService sessionService) {
+    public ConnectivityController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 
-    public connectivityController() { }
+    public ConnectivityController() { }
 
     public SessionService getSessionService() {
         return sessionService;

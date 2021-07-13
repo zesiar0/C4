@@ -23,14 +23,14 @@ import java.util.Objects;
 @RequestMapping("api")
 @CrossOrigin
 
-public class overviewController {
+public class OverviewController {
 
     @Autowired
     private SessionService sessionService;
 
     @RequestMapping(value = "exp/overview", method = RequestMethod.GET)
 
-    public String get_qsdata() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+    public String get_qsdata() {
 
         String url = "/rest/campuswlanqualityservice/v1/expmonitor/overview/rate?param=";
 

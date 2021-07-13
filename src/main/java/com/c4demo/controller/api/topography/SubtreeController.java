@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/topography")
 @CrossOrigin
-public class subtreeController {
+public class SubtreeController {
 
     @Value("${topography.subtree.path}")
     private String path;
     private SessionService sessionService;
 
-    public subtreeController() {  }
+    public SubtreeController() {  }
 
     @Autowired
-    public subtreeController(SessionService sessionService) {
+    public SubtreeController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 
