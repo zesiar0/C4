@@ -25,8 +25,6 @@ public class UserExperienceController {
     @ApiOperation(value = "getUserExpr")
     public String getUserExpr(
             @RequestParam(value = "userType") String userType,
-            @RequestParam(value = "key") String key,
-            @RequestParam(value = "tenantId") String tenantId,
             @RequestParam(value = "startTime") String startTime,
             @RequestParam(value = "endTime") String endTime,
             @RequestParam(value = "userMac") String userMac,
@@ -34,8 +32,8 @@ public class UserExperienceController {
     ) {
         Map<String, String> body = new HashMap<>();
         body.put("userType", userType);
-        body.put("key", key);
-        body.put("tenantId", tenantId);
+        body.put("key", "");
+        body.put("tenantId", "default-organization-id");
         body.put("startTime", startTime);
         body.put("endTime", endTime);
         body.put("userMac", userMac);

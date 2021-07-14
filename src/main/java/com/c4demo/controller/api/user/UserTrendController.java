@@ -25,22 +25,19 @@ public class UserTrendController {
     @RequestMapping(value = "/user/usertrend", method = RequestMethod.POST)
     @ApiOperation(value = "getUserTrend")
     public String getUserTrend(
-            @RequestParam(value = "regionType") String regionType,
             @RequestParam(value = "level") String level,
-            @RequestParam(value = "tenantId") String tenantId,
             @RequestParam(value = "startTime") String startTime,
             @RequestParam(value = "endTime") String endTime,
-            @RequestParam(value = "id") String id,
             @RequestParam(value = "showType") String showType,
             @RequestParam(value = "isAutoRefresh") String isAutoRefresh
     ) {
         Map<String, Object> map = new HashMap<>();
-        map.put("regionType", regionType);
+        map.put("regionType", "site");
         map.put("level", level);
-        map.put("tenantId", tenantId);
+        map.put("tenantId", "default-organization-id");
         map.put("startTime", startTime);
         map.put("endTime", endTime);
-        map.put("id", id);
+        map.put("id", "/");
         map.put("showType", showType);
         map.put("isAutoRefresh", isAutoRefresh);
 

@@ -46,14 +46,12 @@ public class ClientPositionController {
 
     @RequestMapping(value = "topography/clientposition", method = RequestMethod.POST)
     @ApiOperation(value = "getClientPosition")
-    public String getClientPosition(@RequestParam(value = "level") int level,
-                                    @RequestParam(value = "clientId") String clientId) {
+    public String getClientPosition(@RequestParam(value = "level") int level) {
         String param = "?param=";
         JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("level", level);
-        jsonObject.put("level", "1");
-//        jsonObject.put("id", clientId);
-        jsonObject.put("id", "");
+        jsonObject.put("level", level);
+//        jsonObject.put("level", "1");
+        jsonObject.put("id", "/");
         jsonObject.put("type", "floor");
 
         param += UriEncoder.encode(jsonObject.toJSONString());

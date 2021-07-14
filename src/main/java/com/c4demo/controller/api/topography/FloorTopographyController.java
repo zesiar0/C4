@@ -43,12 +43,11 @@ public class FloorTopographyController {
 
     @RequestMapping(value = "topography/floortopography", method = RequestMethod.POST)
     @ApiOperation(value = "getFloorTopology")
-    public String getFloorTopology(@RequestParam(value = "level") int level,
-                                   @RequestParam(value = "clientId") String clientId) {
+    public String getFloorTopology(@RequestParam(value = "level") int level) {
         String param = "?param=";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("level", String.valueOf(level));
-        jsonObject.put("id", clientId);
+        jsonObject.put("id", "/");
         jsonObject.put("type", "floor");
 
         param += UriEncoder.encode(jsonObject.toJSONString());
