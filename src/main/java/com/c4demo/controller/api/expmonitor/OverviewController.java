@@ -2,8 +2,11 @@ package com.c4demo.controller.api.expmonitor;
 
 //api 3.1
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.yaml.snakeyaml.util.UriEncoder;
@@ -18,14 +21,16 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
+@Api(tags = "verviewController")
 public class OverviewController {
     @Resource
     private SessionService sessionService;
 
     @RequestMapping(value = "exp/overview", method = RequestMethod.POST)
-    public List<Map<String,Object>> get_qsdata(
-            @RequestParam(value = "startTime") String startTime,
-            @RequestParam(value = "endTime") String endTime
+    @ApiOperation(value = "get_qsdata")
+    public String get_qsdata(
+//            @RequestParam(value = "startTime") String startTime,
+//            @RequestParam(value = "endTime") String endTime
     ) {
 
         String url = "/rest/campuswlanqualityservice/v1/expmonitor/overview/rate?param=";
@@ -49,10 +54,10 @@ public class OverviewController {
             param.put("regionType","site");
             param.put("level","1");
             param.put("tenantId","default-organization-id");
-//            param.put("startTime","1624549463000");
-//            param.put("endTime","1624635863000");
-            param.put("startTime",startTime);
-            param.put("endTime", endTime);
+            param.put("startTime","1624549463000");
+            param.put("endTime","1624635863000");
+//            param.put("startTime",startTime);
+//            param.put("endTime", endTime);
             param.put("id",all_id[counter]);
 
             String path = UriEncoder.encode(param.toJSONString());
@@ -64,7 +69,7 @@ public class OverviewController {
             switch(counter)
             {
                 case 0:
-                    map_tmp1.put("city","Nanjing");
+                    map_tmp1.put("city", "Nanjing");
                     map_tmp1.put("successCon",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("successCon"));
                     map_tmp1.put("roaming",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("roaming"));
                     map_tmp1.put("capacity",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("capacity"));
@@ -72,7 +77,7 @@ public class OverviewController {
                     listmap.add(map_tmp1);
                     break;
                 case 1:
-                    map_tmp2.put("city","Shanghai");
+                    map_tmp2.put("city", "Shanghai");
                     map_tmp2.put("successCon",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("successCon"));
                     map_tmp2.put("roaming",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("roaming"));
                     map_tmp2.put("capacity",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("capacity"));
@@ -81,7 +86,7 @@ public class OverviewController {
                     break;
 
                 case 2:
-                    map_tmp3.put("city","Suzhou");
+                    map_tmp3.put("city", "Suzhou");
                     map_tmp3.put("successCon",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("successCon"));
                     map_tmp3.put("roaming",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("roaming"));
                     map_tmp3.put("capacity",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("capacity"));
@@ -89,7 +94,7 @@ public class OverviewController {
                     listmap.add(map_tmp3);
                     break;
                 case 3:
-                    map_tmp4.put("city","Shenzhen");
+                    map_tmp4.put("city", "Shenzhen");
                     map_tmp4.put("successCon",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("successCon"));
                     map_tmp4.put("roaming",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("roaming"));
                     map_tmp4.put("capacity",jsonObject.getJSONObject("data").getJSONObject("values").getFloatValue("capacity"));
@@ -102,8 +107,8 @@ public class OverviewController {
 
             counter++;
         }
-        return listmap;
+        Map<String, List> map = new HashMap<>();
+        map.put("data", listmap);
+        return JSON.toJSONString(map);
     }
-
-
 }

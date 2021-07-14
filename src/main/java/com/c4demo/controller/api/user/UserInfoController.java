@@ -1,6 +1,8 @@
 package com.c4demo.controller.api.user;
 
 import com.c4demo.service.session.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
+@Api(tags = "UserInfoController")
 public class UserInfoController {
     @Resource
     private SessionService sessionService;
@@ -19,6 +22,7 @@ public class UserInfoController {
     private String path;
 
     @RequestMapping(value = "/user/userinfo", method = RequestMethod.POST)
+    @ApiOperation(value = "getUserInfo")
     public String getUserInfo(
             @RequestParam(value = "intervals") String intervals,
             @RequestParam(value = "level") String level,

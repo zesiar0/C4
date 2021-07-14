@@ -3,6 +3,8 @@ package com.c4demo.controller.api.expmonitor;
 //api 3.2
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.yaml.snakeyaml.util.UriEncoder;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
+@Api(tags = "RateController")
 public class RateController {
     private SessionService sessionService;
     @Value("${expmonitor.RateController.path}")
@@ -39,6 +42,7 @@ public class RateController {
     }
 
     @RequestMapping(value = "exp/rate", method = RequestMethod.POST)
+    @ApiOperation(value = "get_data")
     public String get_data(
             @RequestParam(value = "regionType") String regionType,
             @RequestParam(value = "level") int level,

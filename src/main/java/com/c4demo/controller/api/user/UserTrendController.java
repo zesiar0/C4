@@ -2,6 +2,8 @@ package com.c4demo.controller.api.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
+@Api(tags = "UserTrendController")
 public class UserTrendController {
     @Resource
     private SessionService sessionService;
@@ -20,6 +23,7 @@ public class UserTrendController {
     private String path;
 
     @RequestMapping(value = "/user/usertrend", method = RequestMethod.POST)
+    @ApiOperation(value = "getUserTrend")
     public String getUserTrend(
             @RequestParam(value = "regionType") String regionType,
             @RequestParam(value = "level") String level,

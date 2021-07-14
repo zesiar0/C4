@@ -2,6 +2,8 @@ package com.c4demo.controller.api.topography;
 
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.service.session.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping(path = "api")
 @CrossOrigin
+@Api(tags = "ClientPositionController")
 public class ClientPositionController {
     @Value("${topography.clientPosition.path}")
     private String path;
@@ -42,6 +45,7 @@ public class ClientPositionController {
     }
 
     @RequestMapping(value = "topography/clientposition", method = RequestMethod.POST)
+    @ApiOperation(value = "getClientPosition")
     public String getClientPosition(@RequestParam(value = "level") int level,
                                     @RequestParam(value = "clientId") String clientId) {
         String param = "?param=";

@@ -2,12 +2,15 @@ package com.c4demo.controller.api.user;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping("api")
+@Api(tags = "UserBriefController")
 public class UserBriefController {
 
     UserListController userListControllerIns;
@@ -28,6 +31,7 @@ public class UserBriefController {
     }
 
     @RequestMapping(value = "/user/userbriefinfo", method = RequestMethod.POST)
+    @ApiOperation(value = "getUserBriefInfo")
     public String getUserBriefInfo() {
         JSONObject userInfo = JSONObject.parseObject(userListControllerIns.getUserList()), ans = new JSONObject();
 
