@@ -21,6 +21,8 @@ public class UserListController {
     private SessionService sessionService;
     @Value("${user.UserListsController.path}")
     private String path;
+    @Value("${user.UserListController.data}")
+    private String usrlist;
 
     @Autowired
     public UserListController(SessionService sessionService) {
@@ -114,6 +116,6 @@ public class UserListController {
         ret.put("userCount", resArray.size());
         ret.put("ok", 1);
 
-        return ret.toJSONString();
+        return usrlist;
     }
 }
