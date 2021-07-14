@@ -20,12 +20,12 @@ public class UserInfoController {
 
     @RequestMapping(value = "/user/userinfo", method = RequestMethod.POST)
     public String getUserInfo(
-//            @RequestParam(value = "intervals") String intervals,
-//            @RequestParam(value = "level") String level,
-//            @RequestParam(value = "tenantId") String tenantId,
-//            @RequestParam(value = "accType") String accType,
-//            @RequestParam(value = "usermac") String usermac,
-//            @RequestParam(value = "id") String id
+            @RequestParam(value = "intervals") String intervals,
+            @RequestParam(value = "level") String level,
+            @RequestParam(value = "tenantId") String tenantId,
+            @RequestParam(value = "accType") String accType,
+            @RequestParam(value = "usermac") String usermac,
+            @RequestParam(value = "id") String id
     ) {
 
         Map<String, String> body = new HashMap<>();

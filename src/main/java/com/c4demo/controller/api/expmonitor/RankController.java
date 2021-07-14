@@ -39,12 +39,22 @@ public class RankController {
     }
 
     @RequestMapping(value = "exp/rank", method = RequestMethod.POST)
-    public String get_data(@RequestParam(value = "regionType") String regionType, @RequestParam(value = "level") int level) {
+    public String get_data(
+            @RequestParam(value = "regionType") String regionType,
+            @RequestParam(value = "level") int level
+    ) {
         String url = "?param=";
 
+//        JSONObject param = new JSONObject();
+//        param.put("regionType", regionType);
+//        param.put("level", level);
+//        param.put("tenantId", "default-organization-id");
+//        param.put("startTime", "1624549463000");
+//        param.put("endTime", "1624635863000");
+//        param.put("id", "/");
         JSONObject param = new JSONObject();
-        param.put("regionType", regionType);
-        param.put("level", level);
+        param.put("regionType", "site");
+        param.put("level", "0");
         param.put("tenantId", "default-organization-id");
         param.put("startTime", "1624549463000");
         param.put("endTime", "1624635863000");

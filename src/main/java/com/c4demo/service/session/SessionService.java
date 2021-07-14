@@ -1,5 +1,6 @@
 package com.c4demo.service.session;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.configure.RestTemplateConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -111,6 +112,13 @@ public class SessionService {
         headers.setAccept(mediaTypeList);
         headers.add("X-Auth-Token", getToken());
         return getJsonData(true, path, headers, body, reqMethod);
+    }
+
+    public JSONArray getJsonData(String url, Map<String, String> body) {
+        HttpEntity entity = new HttpEntity(body, null);
+        ResponseEntity<String> resJson = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        JSONArray resArray = JSONArray.parseArray(String.valueOf(JSONObject.parseObject(resJson.getBody())));
+        return resArray;
     }
 
 }

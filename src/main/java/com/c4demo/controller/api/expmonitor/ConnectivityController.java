@@ -46,16 +46,16 @@ public class ConnectivityController {
     }
 
     @RequestMapping(value = "expmonitor/connectivity", method = RequestMethod.POST)
-    public String getConnectivity(
-//            @RequestParam(value = "regionType") String regionType,
-//            @RequestParam(value = "level") int level,
-//            @RequestParam(value = "tenantId") String tenantId,
-//            @RequestParam(value = "startTime") long startTime,
-//            @RequestParam(value = "endTime") long endTime,
-//            @RequestParam(value = "id") String id,
-//            @RequestParam(value = "accType") int accType,
-//            @RequestParam(value = "dateFrom") long dateFrom,
-//            @RequestParam(value = "dateTo") long dateTo
+    public List<Map> getConnectivity(
+            @RequestParam(value = "regionType") String regionType,
+            @RequestParam(value = "level") int level,
+            @RequestParam(value = "tenantId") String tenantId,
+            @RequestParam(value = "startTime") long startTime,
+            @RequestParam(value = "endTime") long endTime,
+            @RequestParam(value = "id") String id,
+            @RequestParam(value = "accType") int accType,
+            @RequestParam(value = "dateFrom") long dateFrom,
+            @RequestParam(value = "dateTo") long dateTo
     ) {
         int associateFailNum = 0;
         int associateSuccNum = 0;
@@ -122,6 +122,6 @@ public class ConnectivityController {
 //        map.put("authSuccNum", authSuccNum);
         map.put("accessTotalNum", accessTotalNum);
         retList.add(map);
-        return resJson.getBody();
+        return retList;
     }
 }

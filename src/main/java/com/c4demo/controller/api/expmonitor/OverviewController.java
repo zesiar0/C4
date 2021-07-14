@@ -23,7 +23,10 @@ public class OverviewController {
     private SessionService sessionService;
 
     @RequestMapping(value = "exp/overview", method = RequestMethod.POST)
-    public List<Map<String,Object>> get_qsdata() {
+    public List<Map<String,Object>> get_qsdata(
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime
+    ) {
 
         String url = "/rest/campuswlanqualityservice/v1/expmonitor/overview/rate?param=";
         String[] all_id = {"c94e9196-3686-4d4c-a7de-8117f581f63e","9fc9253f-33a4-40db-8afc-825f383e54e8",
@@ -46,8 +49,10 @@ public class OverviewController {
             param.put("regionType","site");
             param.put("level","1");
             param.put("tenantId","default-organization-id");
-            param.put("startTime","1624549463000");
-            param.put("endTime","1624635863000");
+//            param.put("startTime","1624549463000");
+//            param.put("endTime","1624635863000");
+            param.put("startTime",startTime);
+            param.put("endTime", endTime);
             param.put("id",all_id[counter]);
 
             String path = UriEncoder.encode(param.toJSONString());
