@@ -1,7 +1,7 @@
-package com.c4demo.controller.api.topography;
+package com.c4demo.controller.topography;
 
 import com.alibaba.fastjson.JSONObject;
-import com.c4demo.service.session.SessionService;
+import com.c4demo.service.SessionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,27 +9,28 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.yaml.snakeyaml.util.UriEncoder;
 
-import javax.annotation.Resource;
-
 @RestController
-@RequestMapping(path = "api")
+@RequestMapping("api")
 @CrossOrigin
-@Api(tags = "ClientPositionController")
-public class ClientPositionController {
-    @Value("${topography.clientPosition.path}")
+@Api(tags = "FloorTopographyController")
+public class FloorTopographyController {
+    @Value("${topography.floorTopography.path}")
     private String path;
-    @Resource
     private SessionService sessionService;
 
-    public ClientPositionController() { }
+    public FloorTopographyController() { }
 
     @Autowired
-    public ClientPositionController(SessionService sessionService) {
+    public FloorTopographyController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 
     public SessionService getSessionService() {
         return sessionService;
+    }
+
+    public void setSessionService(SessionService sessionService) {
+        this.sessionService = sessionService;
     }
 
     public String getPath() {
@@ -40,21 +41,16 @@ public class ClientPositionController {
         this.path = path;
     }
 
-    public void setSessionService(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
-
-    @RequestMapping(value = "topography/clientposition", method = RequestMethod.POST)
-    @ApiOperation(value = "getClientPosition")
-    public String getClientPosition(@RequestParam(value = "level") int level) {
+    @RequestMapping(value = "topography/floortopography", method = RequestMethod.POST)
+    @ApiOperation(value = "getFloorTopology")
+    public String getFloorTopology(@RequestParam(value = "level") int level) {
         String param = "?param=";
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("level", level);
-//        jsonObject.put("level", "1");
+        jsonObject.put("level", String.valueOf(level));
         jsonObject.put("id", "/");
         jsonObject.put("type", "floor");
 
         param += UriEncoder.encode(jsonObject.toJSONString());
-        return sessionService.getJsonData(path + param, null, SessionService.POST).getBody();
+        return sessionService.getJsonData(path + param, null, SessionService.GET).getBody();
     }
 }

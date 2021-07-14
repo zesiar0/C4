@@ -1,4 +1,4 @@
-package com.c4demo.controller.api.user;
+package com.c4demo.controller.user;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -16,17 +16,17 @@ public class UserBriefController {
     UserListController userListControllerIns;
 
     @Autowired
-    public UserBriefController(com.c4demo.controller.api.user.UserListController userListControllerIns) {
+    public UserBriefController(UserListController userListControllerIns) {
         this.userListControllerIns = userListControllerIns;
     }
 
     public UserBriefController() { }
 
-    public com.c4demo.controller.api.user.UserListController getUserListControllerIns() {
+    public UserListController getUserListControllerIns() {
         return userListControllerIns;
     }
 
-    public void setUserListControllerIns(com.c4demo.controller.api.user.UserListController userListControllerIns) {
+    public void setUserListControllerIns(UserListController userListControllerIns) {
         this.userListControllerIns = userListControllerIns;
     }
 
