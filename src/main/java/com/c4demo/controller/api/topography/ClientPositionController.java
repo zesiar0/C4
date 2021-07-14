@@ -50,8 +50,10 @@ public class ClientPositionController {
                                     @RequestParam(value = "clientId") String clientId) {
         String param = "?param=";
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("level", level);
-        jsonObject.put("id", clientId);
+//        jsonObject.put("level", level);
+        jsonObject.put("level", "1");
+//        jsonObject.put("id", clientId);
+        jsonObject.put("id", "");
         jsonObject.put("type", "floor");
 
         param += UriEncoder.encode(jsonObject.toJSONString());
