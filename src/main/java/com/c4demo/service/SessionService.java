@@ -1,5 +1,6 @@
-package com.c4demo.service.session;
+package com.c4demo.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.c4demo.configure.RestTemplateConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,7 +74,6 @@ public class SessionService {
     ResponseEntity<String> getJsonData(boolean needRenewToken, String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
         HttpEntity entity = new HttpEntity(body, headers);
         ResponseEntity<String> resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
-        System.out.println(resJson);
         if (needRenewToken && JSONObject.parseObject(resJson.getBody()).getIntValue("resultCode") != 0) {
             updateToken();
             headers.set("X-Auth-Token", getToken());
@@ -111,6 +111,13 @@ public class SessionService {
         headers.setAccept(mediaTypeList);
         headers.add("X-Auth-Token", getToken());
         return getJsonData(true, path, headers, body, reqMethod);
+    }
+
+    public JSONArray getJsonData(String url, Map<String, String> body) {
+        HttpEntity entity = new HttpEntity(body, null);
+        ResponseEntity<String> resJson = this.restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        JSONArray resArray = JSONArray.parseArray(String.valueOf(JSONObject.parseObject(resJson.getBody())));
+        return resArray;
     }
 
 }

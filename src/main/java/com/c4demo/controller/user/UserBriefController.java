@@ -1,36 +1,37 @@
-package com.c4demo.controller.api.user;
+package com.c4demo.controller.user;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping("api")
+@Api(tags = "UserBriefController")
 public class UserBriefController {
 
     UserListController userListControllerIns;
 
     @Autowired
-    public UserBriefController(com.c4demo.controller.api.user.UserListController userListControllerIns) {
+    public UserBriefController(UserListController userListControllerIns) {
         this.userListControllerIns = userListControllerIns;
     }
 
     public UserBriefController() { }
 
-    public com.c4demo.controller.api.user.UserListController getUserListControllerIns() {
+    public UserListController getUserListControllerIns() {
         return userListControllerIns;
     }
 
-    public void setUserListControllerIns(com.c4demo.controller.api.user.UserListController userListControllerIns) {
+    public void setUserListControllerIns(UserListController userListControllerIns) {
         this.userListControllerIns = userListControllerIns;
     }
 
-    @GetMapping(path = "/user/userbriefinfo")
+    @RequestMapping(value = "/user/userbriefinfo", method = RequestMethod.POST)
+    @ApiOperation(value = "getUserBriefInfo")
     public String getUserBriefInfo() {
         JSONObject userInfo = JSONObject.parseObject(userListControllerIns.getUserList()), ans = new JSONObject();
 

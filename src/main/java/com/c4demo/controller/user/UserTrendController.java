@@ -1,7 +1,9 @@
-package com.c4demo.controller.api.user;
+package com.c4demo.controller.user;
 
 import com.alibaba.fastjson.JSONObject;
-import com.c4demo.service.session.SessionService;
+import com.c4demo.service.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,30 +15,29 @@ import java.util.Map;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
+@Api(tags = "UserTrendController")
 public class UserTrendController {
     @Resource
     private SessionService sessionService;
     @Value("${user.UserTrendController.path}")
     private String path;
 
-    @RequestMapping(value = "/user/usertrend", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/usertrend", method = RequestMethod.POST)
+    @ApiOperation(value = "getUserTrend")
     public String getUserTrend(
-            @RequestParam(value = "regionType") String regionType,
             @RequestParam(value = "level") String level,
-            @RequestParam(value = "tenantId") String tenantId,
             @RequestParam(value = "startTime") String startTime,
             @RequestParam(value = "endTime") String endTime,
-            @RequestParam(value = "id") String id,
             @RequestParam(value = "showType") String showType,
             @RequestParam(value = "isAutoRefresh") String isAutoRefresh
     ) {
         Map<String, Object> map = new HashMap<>();
-        map.put("regionType", regionType);
+        map.put("regionType", "site");
         map.put("level", level);
-        map.put("tenantId", tenantId);
+        map.put("tenantId", "default-organization-id");
         map.put("startTime", startTime);
         map.put("endTime", endTime);
-        map.put("id", id);
+        map.put("id", "/");
         map.put("showType", showType);
         map.put("isAutoRefresh", isAutoRefresh);
 

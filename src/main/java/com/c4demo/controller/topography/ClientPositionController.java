@@ -1,7 +1,9 @@
-package com.c4demo.controller.api.topography;
+package com.c4demo.controller.topography;
 
 import com.alibaba.fastjson.JSONObject;
-import com.c4demo.service.session.SessionService;
+import com.c4demo.service.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +12,9 @@ import org.yaml.snakeyaml.util.UriEncoder;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping(path = "api/topography")
+@RequestMapping(path = "api")
 @CrossOrigin
+@Api(tags = "ClientPositionController")
 public class ClientPositionController {
     @Value("${topography.clientPosition.path}")
     private String path;
@@ -41,12 +44,16 @@ public class ClientPositionController {
         this.sessionService = sessionService;
     }
 
-    @GetMapping("clientposition")
-    public String getClientPosition(@RequestParam int level,
-                                    @RequestParam String clientId) {
+    @RequestMapping(value = "topography/clientposition", method = RequestMethod.POST)
+    @ApiOperation(value = "getClientPosition")
+    public String getClientPosition(
+            @RequestParam(value = "level") int level,
+            @RequestParam(value = "clientId") String clientId
+    ) {
         String param = "?param=";
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("level", level);
+//        jsonObject.put("level", "1");
         jsonObject.put("id", clientId);
         jsonObject.put("type", "floor");
 

@@ -1,8 +1,10 @@
-package com.c4demo.controller.api.user;
+package com.c4demo.controller.user;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.c4demo.service.session.SessionService;
+import com.c4demo.service.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
+@Api(tags = "UserListController")
 public class UserListController {
     private SessionService sessionService;
     @Value("${user.UserListsController.path}")
     private String path;
+    @Value("${user.UserListController.data}")
+    private String usrlist;
 
     @Autowired
     public UserListController(SessionService sessionService) {
@@ -35,9 +40,10 @@ public class UserListController {
     }
 
 
-    @RequestMapping(value = "/user/userlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/userlist", method = RequestMethod.POST)
+    @ApiOperation(value = "getUserList")
     public String getUserList(
-//            @RequestParam(value = "filter", required = false) Object filter,
+            //            @RequestParam(value = "filter", required = false) Object filter,
 //            @RequestParam(value = "level") String level,
 //            @RequestParam(value = "tenantId") String tenantId,
 //            @RequestParam(value = "startTime") String startTime,
@@ -110,6 +116,6 @@ public class UserListController {
         ret.put("userCount", resArray.size());
         ret.put("ok", 1);
 
-        return ret.toJSONString();
+        return usrlist;
     }
 }

@@ -1,8 +1,10 @@
-package com.c4demo.controller.api.expmonitor;
+package com.c4demo.controller.expmonitor;
 
-//api 3.2
+//api 3.3
 import com.alibaba.fastjson.JSONObject;
-import com.c4demo.service.session.SessionService;
+import com.c4demo.service.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,14 @@ import org.yaml.snakeyaml.util.UriEncoder;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
-public class RateController {
+@Api(tags = "RankController")
+public class RankController {
     private SessionService sessionService;
-    @Value("${expmonitor.RateController.path}")
+    @Value("${expmonitor.RankController.path}")
     private String path;
 
     @Autowired
-    public RateController(SessionService sessionService) {
+    public RankController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
 
@@ -38,23 +41,25 @@ public class RateController {
         this.path = path;
     }
 
-    @GetMapping(value = "exp/rate")
+    @RequestMapping(value = "exp/rank", method = RequestMethod.POST)
+    @ApiOperation(value = "get_data")
     public String get_data(
-            @RequestParam String regionType,
-            @RequestParam int level,
-            @RequestParam String id,
-            @RequestParam Long startTime,
-            @RequestParam Long endTime
+            @RequestParam(value = "level") String level,
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime
     ) {
         String url = "?param=";
 
         JSONObject param = new JSONObject();
-        param.put("regionType", regionType);
+        param.put("regionType", "site");
         param.put("level", level);
+//        param.put("level", "1");
         param.put("tenantId", "default-organization-id");
-        param.put("startTime", startTime); // 1624549463000
-        param.put("endTime", endTime); // 1624635863000
-        param.put("id", id);
+        param.put("startTime", startTime);
+        param.put("endTime", endTime);
+//        param.put("startTime", "1624549463000");
+//        param.put("endTime", "1624635863000");
+        param.put("id", "/");
 
         url += UriEncoder.encode(param.toJSONString());
         ResponseEntity<String> resJson = sessionService.getJsonData(path + url, null, SessionService.GET);

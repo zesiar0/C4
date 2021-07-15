@@ -1,6 +1,8 @@
-package com.c4demo.controller.api.topography;
+package com.c4demo.controller.topography;
 
-import com.c4demo.service.session.SessionService;
+import com.c4demo.service.SessionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.LinkedMultiValueMap;
@@ -8,8 +10,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/topography")
+@RequestMapping("api")
 @CrossOrigin
+@Api(tags = "SubtreeController")
 public class SubtreeController {
 
     @Value("${topography.subtree.path}")
@@ -31,8 +34,9 @@ public class SubtreeController {
         this.sessionService = sessionService;
     }
 
-    @GetMapping("subtree")
-    public String getSubtree(@RequestParam String locationId) {
+    @RequestMapping(value = "topography/subtree", method = RequestMethod.POST)
+    @ApiOperation(value = "getSubtree")
+    public String getSubtree(@RequestParam(value = "locationId") String locationId) {
         MultiValueMap<String, String> idHeader = new LinkedMultiValueMap<>();
         idHeader.add("id", locationId);
 
