@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.c4demo.dao.UserDao">
+    <select id="findByUsernameAmdPassword" resultType="com.c4demo.entity.User">
+        select * from C4.user
+        where username = #{username} and password = #{password};
+    </select>
+
+    <insert id="insertUser" parameterType="com.c4demo.entity.User">
+        insert into C4.user (id, username, password)
+        values (#{id}, #{username}, #{password});
+    </insert>
+
+    <select id="findUser" resultType="String">
+        select username from C4.user
+        where username = #{username} and password = #{password};
+    </select>
+</mapper>

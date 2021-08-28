@@ -10,4 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     User findByUsernameAmdPassword(@Param("username") String username, @Param("password") String password);
+
+    int insertUser(User user);
+
+    int findUser(@Param("username") String username);
 }
