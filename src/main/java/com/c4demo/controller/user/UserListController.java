@@ -40,7 +40,7 @@ public class UserListController {
     }
 
 
-    @RequestMapping(value = "/user/userlist", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/userlist")//, method = RequestMethod.POST)
     @ApiOperation(value = "getUserList")
     public String getUserList(
             //            @RequestParam(value = "filter", required = false) Object filter,
@@ -55,7 +55,7 @@ public class UserListController {
 //            @RequestParam(value = "sortType") String sortType
     ) {
         JSONObject ret = new JSONObject();
-        int currentPage = 1;
+        int currentPage = 2;
         Map<String, String> body = new HashMap<>();
 
         body.put("regionType", "site");

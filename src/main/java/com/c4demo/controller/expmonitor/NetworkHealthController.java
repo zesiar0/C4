@@ -20,13 +20,13 @@ public class NetworkHealthController {
     @RequestMapping(value = "/exp/netHealth", method = RequestMethod.POST)
     public String searchNetworkHealth(
             @RequestParam(value = "statDimens") String statDimens,
-            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "beginTime") String startTime,
             @RequestParam(value = "endTime") String endTime,
             @RequestParam(value = "siteInfo") String siteInfo
     ) {
         HashMap<String, String> body = new HashMap<>();
         body.put("statDimens", statDimens);
-        body.put("startTime", startTime);
+        body.put("beginTime", startTime);
         body.put("endTime", endTime);
         body.put("siteInfo", siteInfo);
 

@@ -1,6 +1,10 @@
 package com.c4demo.controller.user;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.c4demo.entity.SessionListResp;
 import com.c4demo.service.SessionService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +33,13 @@ public class UserJourneyController {
         body.put("usermac", usermac);
 
         ResponseEntity<String> resJson = sessionService.getJsonData(path, body, SessionService.POST);
+        JSONObject jsonObject = JSONObject.parseObject(resJson.getBody());
+        System.out.println(jsonObject.getString("data"));
+        Gson gson = new Gson();
+        SessionListResp sessionListResp = gson.fromJson(resJson.getBody(), SessionListResp.class);
+        System.out.println(sessionListResp.getData());
+//        SessionListResp sessionListResp = JSON.toJavaObject(jsonObject, SessionListResp.class);
+//        System.out.println(sessionListResp.getData());
         return resJson.getBody();
     }
 }
