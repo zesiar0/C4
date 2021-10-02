@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("api")
 @CrossOrigin
-@Api(tags = "verviewController")
+@Api(tags = "OverviewController")
 public class OverviewController {
     @Resource
     private SessionService sessionService;
