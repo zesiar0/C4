@@ -16,6 +16,9 @@ public class WarningInfoController {
     @Value("${info.WarnInfoController.data}")
     private String warningInfo;
 
+    @Value("${info.WarnInfoController.brief}")
+    private String warningBrief;
+
     public void setWarningInfo(String warningInfo) {
         this.warningInfo = warningInfo;
     }
@@ -24,8 +27,21 @@ public class WarningInfoController {
         return warningInfo;
     }
 
+    public String getWarningBrief() {
+        return warningBrief;
+    }
+
+    public void setWarningBrief(String warningBrief) {
+        this.warningBrief = warningBrief;
+    }
+
     @RequestMapping(value = "info/warninfo", method = RequestMethod.GET)
     public String requestWarningInfo() {
         return getWarningInfo();
+    }
+
+    @RequestMapping(value = "info/warnbrief", method = RequestMethod.GET)
+    public String requestWarningBrief() {
+        return getWarningBrief();
     }
 }
