@@ -27,14 +27,13 @@ public class UserJourneyController {
             @RequestParam(value = "usermac") String usermac
     ) {
         HashMap<String, String> body = new HashMap<>();
+        Gson gson = new Gson();
         body.put("startTime", startTime);
         body.put("endTime", endTime);
         body.put("usermac", usermac);
 
         ResponseEntity<String> resJson = sessionService.getJsonData(path, body, SessionService.POST);
-        JSONObject jsonObject = JSONObject.parseObject(resJson.getBody());
-        System.out.println(jsonObject.getString("data"));
-        Gson gson = new Gson();
+        System.out.println(resJson.getBody());
         SessionListResp sessionListResp = gson.fromJson(resJson.getBody(), SessionListResp.class);
         System.out.println(sessionListResp.getData());
 //        SessionListResp sessionListResp = JSON.toJavaObject(jsonObject, SessionListResp.class);

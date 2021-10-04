@@ -6,12 +6,12 @@ import java.util.List;
 
 @Data
 public class SessionListResp {
-    private Integer resultCode;
+    private String resultCode;
     private String errorDes;
     private String errorReson;
     private String errorDetail;
     private String errorAdvice;
     private List<SessionOnModel> data;
-    private Long endTime;
-    private Long nextEndTime;
+//    private Long endTime;
+    private String nextEndTime;
 }

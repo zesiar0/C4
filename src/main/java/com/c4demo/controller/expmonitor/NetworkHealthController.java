@@ -1,9 +1,11 @@
 package com.c4demo.controller.expmonitor;
 
+import com.alibaba.fastjson.JSONArray;
 import com.c4demo.service.SessionService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.util.UriEncoder;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -15,14 +17,14 @@ public class NetworkHealthController {
     @Resource
     private SessionService sessionService;
     @Value("${expmonitor.NetworkHealthController.path}")
-    private String path;
+    private String url;
 
-    @RequestMapping(value = "/exp/netHealth", method = RequestMethod.POST)
+    @RequestMapping(value = "/exp/netHealth")
     public String searchNetworkHealth(
-            @RequestParam(value = "statDimens") String statDimens,
-            @RequestParam(value = "beginTime") String startTime,
-            @RequestParam(value = "endTime") String endTime,
-            @RequestParam(value = "siteInfo") String siteInfo
+            @RequestParam(value = "statDimens", required = false) String statDimens,
+            @RequestParam(value = "beginTime", required = false) String startTime,
+            @RequestParam(value = "endTime", required = false) String endTime,
+            @RequestParam(value = "siteInfo", required = false) String siteInfo
     ) {
         HashMap<String, String> body = new HashMap<>();
         body.put("statDimens", statDimens);
@@ -30,7 +32,11 @@ public class NetworkHealthController {
         body.put("endTime", endTime);
         body.put("siteInfo", siteInfo);
 
-        ResponseEntity<String> resJson = sessionService.getJsonData(path, body, SessionService.GET);
+        String data = UriEncoder.encode("{\"endTime\":1628496796000,\"beginTime\":1628438400000,\"statDimens\":[\"ALL\",\"deviceEnv\",\"deviceCapacity\",\"networkPerformance\",\"networkStatus\"],\"siteInfo\":{\"level\":1,\"subnetIds\":[\"857b706e-67d9-49c0-b3cd-4bd1e6963c07\"]}}");
+        String path = "?condition=" + data;
+
+        System.out.println(url + path);
+        ResponseEntity<String> resJson = sessionService.getJsonData(url+path, null, SessionService.GET);
         return resJson.getBody();
     }
 }
