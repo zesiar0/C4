@@ -18,6 +18,8 @@ public class NetworkHealthController {
     private SessionService sessionService;
     @Value("${expmonitor.NetworkHealthController.path}")
     private String url;
+    @Value("${expmonitor.NetworkHealthController.data}")
+    private String resp;
 
     @RequestMapping(value = "/exp/netHealth")
     public String searchNetworkHealth(
@@ -36,7 +38,7 @@ public class NetworkHealthController {
         String path = "?condition=" + data;
 
         System.out.println(url + path);
-        ResponseEntity<String> resJson = sessionService.getJsonData(url+path, null, SessionService.GET);
-        return resJson.getBody();
+//        ResponseEntity<String> resJson = sessionService.getJsonData(url+path, null, SessionService.GET);
+        return resp;
     }
 }
