@@ -1,4 +1,4 @@
-package com.c4demo.entity;
+package com.c4demo.entity.nodelist;
 
 import lombok.Data;
 

@@ -1,8 +1,7 @@
 package com.c4demo.controller.user;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.c4demo.entity.SessionListResp;
+import com.c4demo.entity.nodelist.SessionListResp;
 import com.c4demo.service.SessionService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;

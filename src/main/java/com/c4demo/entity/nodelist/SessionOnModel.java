@@ -1,5 +1,6 @@
-package com.c4demo.entity;
+package com.c4demo.entity.nodelist;
 
+import com.c4demo.entity.nodelist.NodeKpi;
 import lombok.Data;
 
 import java.util.List;

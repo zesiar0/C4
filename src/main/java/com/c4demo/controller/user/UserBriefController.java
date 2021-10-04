@@ -42,7 +42,8 @@ public class UserBriefController {
             int length = userInfo.getInteger("userCount");
 
             for (int i = 0; i < length; i++) {
-                JSONObject currentUser = userArray.getJSONObject(i), resUserInfo = new JSONObject();
+                JSONObject currentUser = userArray.getJSONObject(i);
+                JSONObject resUserInfo = new JSONObject();
 
                 resUserInfo.put("userName", currentUser.getString("userName"));
                 resUserInfo.put("userMac", currentUser.getString("userMac"));

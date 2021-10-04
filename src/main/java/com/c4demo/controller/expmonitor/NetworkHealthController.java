@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("api")
 @CrossOrigin
 public class NetworkHealthController {
     @Resource

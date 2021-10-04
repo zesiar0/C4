@@ -74,6 +74,7 @@ public class SessionService {
     ResponseEntity<String> getJsonData(boolean needRenewToken, String path, HttpHeaders headers, Map<String, String> body, HttpMethod reqMethod) {
         HttpEntity entity = new HttpEntity(body, headers);
         ResponseEntity<String> resJson = this.restTemplate.exchange(platformURL + path, reqMethod, entity, String.class);
+        System.out.println(resJson);
         if (needRenewToken && JSONObject.parseObject(resJson.getBody()).getIntValue("resultCode") != 0) {
             updateToken();
             headers.set("X-Auth-Token", getToken());
@@ -95,6 +96,7 @@ public class SessionService {
         mediaTypeList.add(MediaType.APPLICATION_JSON);
         headers.setAccept(mediaTypeList);
         headers.add("X-Auth-Token", getToken());
+        System.out.println(token);
         headers.addAll(extraHeaders);
         return getJsonData(true, path, headers, body, reqMethod);
     }
