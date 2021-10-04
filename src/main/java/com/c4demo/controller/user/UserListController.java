@@ -55,7 +55,7 @@ public class UserListController {
 //            @RequestParam(value = "sortType") String sortType
     ) {
         JSONObject ret = new JSONObject();
-        int currentPage = 100;
+        int currentPage = 1;
         Map<String, String> body = new HashMap<>();
 
         body.put("regionType", "site");

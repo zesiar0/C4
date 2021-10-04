@@ -21,31 +21,31 @@ public class UserTrendController {
     private SessionService sessionService;
     @Value("${user.UserTrendController.path}")
     private String path;
+    @Value("${user.UserTrendController.data}")
+    private String resp;
 
-    @RequestMapping(value = "/user/usertrend", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/usertrend")
     @ApiOperation(value = "getUserTrend")
     public String getUserTrend(
-            @RequestParam(value = "level") String level,
-            @RequestParam(value = "startTime") String startTime,
-            @RequestParam(value = "endTime") String endTime,
-            @RequestParam(value = "showType") String showType,
-            @RequestParam(value = "isAutoRefresh") String isAutoRefresh
+            @RequestParam(value = "startTime", required = false) String startTime,
+            @RequestParam(value = "endTime", required = false) String endTime,
+            @RequestParam(value = "showType", required = false) String showType
     ) {
         Map<String, Object> map = new HashMap<>();
         map.put("regionType", "site");
-        map.put("level", level);
+        map.put("level", 0);
         map.put("tenantId", "default-organization-id");
         map.put("startTime", startTime);
         map.put("endTime", endTime);
         map.put("id", "/");
         map.put("showType", showType);
-        map.put("isAutoRefresh", isAutoRefresh);
+        map.put("isAutoRefresh", false);
 
         String json = JSONObject.toJSONString(map);
         Map<String, String> body = new HashMap<>();
         body.put("param", json);
 
         ResponseEntity<String> resJson = sessionService.getJsonData(path, body, SessionService.GET);
-        return resJson.getBody();
+        return resp;
     }
 }
